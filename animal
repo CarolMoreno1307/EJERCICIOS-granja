@@ -1,0 +1,18 @@
+class Animal:
+    def __init__(self, nombre, especie, peso):
+        self.nombre = nombre
+        self.especie = especie
+        self.peso = peso
+        self.vacunado = False
+
+    def alimentar(self, cantidad):
+        self.peso += cantidad
+        print(f"{self.nombre} ha sido alimentado. Nuevo peso: {self.peso} kg.")
+
+    def vacunar(self):
+        self.vacunado = True
+        print(f"{self.nombre} ha sido vacunado.")
+
+    def registrar_peso(self, nuevo_peso):
+        self.peso = nuevo_peso
+        print(f"Nuevo peso registrado para {self.nombre}: {self.peso} kg.")
