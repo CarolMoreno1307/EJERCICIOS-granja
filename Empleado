@@ -1,0 +1,15 @@
+class Empleado:
+    def __init__(self, nombre, tarea):
+        self.nombre = nombre
+        self.tarea = tarea
+        self.asistencias = 0
+
+    def realizar_tarea(self):
+        print(f"{self.nombre} está realizando la tarea: {self.tarea}.")
+
+    def registrar_asistencia(self):
+        self.asistencias += 1
+        print(f"Asistencia registrada para {self.nombre}. Total asistencias: {self.asistencias}.")
+
+    def reportar_incidencias(self, incidencia):
+        print(f"{self.nombre} reporta: {incidencia}")
