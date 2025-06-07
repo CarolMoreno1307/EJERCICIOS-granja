@@ -1,0 +1,21 @@
+from animales import Animal
+from corrales import Corral
+from empleados import Empleado
+
+class Granja:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.corrales = []
+        self.empleados = []
+
+    def agregar_corral(self, corral):
+        self.corrales.append(corral)
+        print(f"Corral {corral.identificador} agregado a la granja.")
+
+    def contratar_empleado(self, empleado):
+        self.empleados.append(empleado)
+        print(f"Empleado {empleado.nombre} contratado en la granja.")
+
+    def cerrar(self):
+        print(f"La granja {self.nombre} ha cerrado. Los empleados ya no están vinculados.")
+        self.empleados.clear()
