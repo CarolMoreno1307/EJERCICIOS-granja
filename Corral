@@ -1,0 +1,11 @@
+class Corral:
+    def __init__(self, identificador):
+        self.identificador = identificador
+        self.animales = []
+
+    def asignar_animal(self, animal):
+        self.animales.append(animal)
+        print(f"{animal.nombre} ha sido asignado al corral {self.identificador}.")
+
+    def limpiar(self):
+        print(f"El corral {self.identificador} ha sido limpiado.")
