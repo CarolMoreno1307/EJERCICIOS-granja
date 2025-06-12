@@ -1,15 +1,80 @@
-class Empleado:
-    def __init__(self, nombre, tarea):
-        self.nombre = nombre
-        self.tarea = tarea
-        self.asistencias = 0
+from abc import ABC, abstractmethod
 
+class Tarea:
+    """
+    Representa una tarea asignada a un trabajador de la granja.
+    """
+    def __init__(self, descripcion):
+        self.descripcion = descripcion
+
+class Trabajador(ABC):
+    """
+    Clase abstracta base para trabajadores de la granja.
+    """
+    def __init__(self, nombre):
+        self._nombre = nombre
+        self._asistencias = 0
+
+    @property
+    def nombre(self):
+        return self._nombre
+
+    @nombre.setter
+    def nombre(self, valor):
+        self._nombre = valor
+
+    @property
+    def asistencias(self):
+        return self._asistencias
+
+    @abstractmethod
     def realizar_tarea(self):
-        print(f"{self.nombre} está realizando la tarea: {self.tarea}.")
+        pass
 
     def registrar_asistencia(self):
-        self.asistencias += 1
-        print(f"Asistencia registrada para {self.nombre}. Total asistencias: {self.asistencias}.")
+        """
+        Registra una asistencia y retorna el total actualizado.
+        """
+        try:
+            self._asistencias += 1
+            return self._asistencias
+        except Exception as e:
+            print(f"Error al registrar asistencia: {e}")
+            return None
 
     def reportar_incidencias(self, incidencia):
-        print(f"{self.nombre} reporta: {incidencia}")
+        """
+        Permite que el trabajador reporte una incidencia.
+        """
+        return f"{self._nombre} reporta: {incidencia}"
+
+class Empleado(Trabajador):
+    """
+    Empleado de la granja, con una tarea asignada.
+    Implementa los principios de POO y SOLID.
+    """
+    def __init__(self, nombre, tarea: Tarea):
+        super().__init__(nombre)
+        self._tarea = tarea
+
+    @property
+    def tarea(self):
+        return self._tarea
+
+    @tarea.setter
+    def tarea(self, nueva_tarea):
+        self._tarea = nueva_tarea
+
+    def realizar_tarea(self):
+        """
+        Realiza la tarea asignada y retorna un mensaje.
+        """
+        return f"{self._nombre} está realizando la tarea: {self._tarea.descripcion}."
+
+# Ejemplo de uso:
+if __name__ == "__main__":
+    tarea1 = Tarea("Alimentar a los animales")
+    empleado1 = Empleado("Carlos", tarea1)
+    print(empleado1.realizar_tarea())
+    print(empleado1.registrar_asistencia())
+    print(empleado1.reportar_incidencias("Falta de alimento en el almacén"))
