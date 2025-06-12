@@ -1,18 +1,53 @@
-class Animal:
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
     def __init__(self, nombre, especie, peso):
-        self.nombre = nombre
-        self.especie = especie
-        self.peso = peso
-        self.vacunado = False
+        self._nombre = nombre
+        self._especie = especie
+        self._peso = peso
+        self._vacunado = False
 
+    @property
+    def nombre(self):
+        return self._nombre
+
+    @nombre.setter
+    def nombre(self, valor):
+        if not valor:
+            raise ValueError("El nombre no puede estar vacío.")
+        self._nombre = valor
+
+    @abstractmethod
     def alimentar(self, cantidad):
-        self.peso += cantidad
-        print(f"{self.nombre} ha sido alimentado. Nuevo peso: {self.peso} kg.")
+        pass
 
+    @abstractmethod
     def vacunar(self):
-        self.vacunado = True
-        print(f"{self.nombre} ha sido vacunado.")
+        pass
 
     def registrar_peso(self, nuevo_peso):
-        self.peso = nuevo_peso
-        print(f"Nuevo peso registrado para {self.nombre}: {self.peso} kg.")
+        if nuevo_peso <= 0:
+            raise ValueError("El peso debe ser positivo.")
+        self._peso = nuevo_peso
+        return self._peso
+
+class Perro(Animal):
+    def alimentar(self, cantidad):
+        self._peso += cantidad
+        return self._peso
+
+    def vacunar(self):
+        self._vacunado = True
+        return self._vacunado
+
+class Granja:
+    def __init__(self):
+        self.animales = []
+
+    def agregar_animal(self, animal):
+        self.animales.append(animal)
+
+# Uso de la clase
+perro = Perro("Fido", "Perro", 10)
+print(perro.alimentar(2))
+print(perro.vacunar())
