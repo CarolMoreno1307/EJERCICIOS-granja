@@ -1,11 +1,80 @@
+from typing import List
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    """Clase abstracta para representar un animal."""
+
+    @property
+    @abstractmethod
+    def nombre(self) -> str:
+        pass
+
+    @abstractmethod
+    def hacer_sonido(self) -> str:
+        pass
+
 class Corral:
-    def __init__(self, identificador):
-        self.identificador = identificador
-        self.animales = []
+    """
+    Clase que representa un corral y gestiona la asignación de animales.
+    """
 
-    def asignar_animal(self, animal):
-        self.animales.append(animal)
-        print(f"{animal.nombre} ha sido asignado al corral {self.identificador}.")
+    def __init__(self, identificador: str):
+        self._identificador = identificador
+        self._animales: List[Animal] = []
 
-    def limpiar(self):
-        print(f"El corral {self.identificador} ha sido limpiado.")
+    # Encapsulamiento con getter y setter
+    @property
+    def identificador(self) -> str:
+        return self._identificador
+
+    @identificador.setter
+    def identificador(self, value: str):
+        if not value:
+            raise ValueError("El identificador no puede estar vacío.")
+        self._identificador = value
+
+    @property
+    def animales(self) -> List[Animal]:
+        return self._animales
+
+    # Métodos personalizados
+    def asignar_animal(self, animal: Animal) -> bool:
+        """Asigna un animal al corral. Devuelve True si se asignó correctamente."""
+        if not isinstance(animal, Animal):
+            raise TypeError("Sólo se pueden asignar objetos de tipo Animal.")
+        self._animales.append(animal)
+        print(f"{animal.nombre} ha sido asignado al corral {self._identificador}.")
+        return True
+
+    def limpiar(self) -> None:
+        """Limpia el corral y muestra un mensaje."""
+        print(f"El corral {self._identificador} ha sido limpiado.")
+
+    def listar_animales(self) -> List[str]:
+        """Devuelve una lista con los nombres de los animales en el corral."""
+        return [animal.nombre for animal in self._animales]
+
+    def sonidos_de_todos(self) -> List[str]:
+        """Devuelve una lista con los sonidos de todos los animales en el corral."""
+        return [animal.hacer_sonido() for animal in self._animales]
+
+# Ejemplo de subclase que implementa polimorfismo
+class Vaca(Animal):
+    def __init__(self, nombre: str):
+        self._nombre = nombre
+
+    @property
+    def nombre(self) -> str:
+        return self._nombre
+
+    def hacer_sonido(self) -> str:
+        return "Muu"
+
+# Ejemplo de uso
+if __name__ == "__main__":
+    corral = Corral("A1")
+    vaca1 = Vaca("Lola")
+    corral.asignar_animal(vaca1)
+    print(corral.listar_animales())
+    print(corral.sonidos_de_todos())
+    corral.limpiar()
