@@ -1,56 +1,77 @@
-from animales import Animal
+from animales import Animal, Vaca, Cerdo, Gallina
 from corrales import Corral
 from empleados import Empleado
 from granja import Granja
 
 def main():
-    # Crear una granja
-    granja_buen_pastor = Granja("El Buen Pastor")
-    
-    # Crear animales
-    vaca_lola = Animal("Lola", "Vaca", 450)
-    cerdo_pepe = Animal("Pepe", "Cerdo", 120)
-    gallina_clara = Animal("Clara", "Gallina", 2.5)
-    
-    # Crear corrales
-    corral_vacas = Corral("V-01")
-    corral_cerdos = Corral("C-01")
-    corral_aves = Corral("A-01")
-    
-    # Asignar animales a corrales
-    corral_vacas.asignar_animal(vaca_lola)
-    corral_cerdos.asignar_animal(cerdo_pepe)
-    corral_aves.asignar_animal(gallina_clara)
-    
-    # Agregar corrales a la granja
-    granja_buen_pastor.agregar_corral(corral_vacas)
-    granja_buen_pastor.agregar_corral(corral_cerdos)
-    granja_buen_pastor.agregar_corral(corral_aves)
-    
-    # Crear empleados
-    empleado1 = Empleado("Juan Pérez", "Alimentación de animales")
-    empleado2 = Empleado("María García", "Limpieza de corrales")
-    empleado3 = Empleado("Carlos López", "Control sanitario")
-    
-    # Contratar empleados
-    granja_buen_pastor.contratar_empleado(empleado1)
-    granja_buen_pastor.contratar_empleado(empleado2)
-    granja_buen_pastor.contratar_empleado(empleado3)
-    
-    # Demostrar funcionalidades
-    print("\n--- Operaciones diarias en la granja ---")
-    empleado1.registrar_asistencia()
-    empleado1.realizar_tarea()
-    vaca_lola.alimentar(10)
-    cerdo_pepe.vacunar()
-    gallina_clara.registrar_peso(2.7)
-    corral_aves.limpiar()
-    empleado2.reportar_incidencias("Fuga de agua en el corral A-01")
-    
-    # Cerrar la granja (demostrar composición)
-    print("\n--- Cierre de la granja ---")
-    granja_buen_pastor.cerrar()
-    print(f"Empleados después del cierre: {len(granja_buen_pastor.empleados)}")
+    """
+    Función principal que ejecuta el flujo de la granja.
+    """
+    try:
+        # Crear la granja (composición)
+        granja_buen_pastor = Granja("El Buen Pastor")
+
+        # Crear animales usando polimorfismo (subclases)
+        vaca_lola = Vaca("Lola", 450)
+        cerdo_pepe = Cerdo("Pepe", 120)
+        gallina_clara = Gallina("Clara", 2.5)
+
+        # Crear corrales
+        corral_vacas = Corral("V-01")
+        corral_cerdos = Corral("C-01")
+        corral_aves = Corral("A-01")
+
+        # Asignar animales a corrales con manejo de errores
+        try:
+            corral_vacas.asignar_animal(vaca_lola)
+            corral_cerdos.asignar_animal(cerdo_pepe)
+            corral_aves.asignar_animal(gallina_clara)
+        except Exception as e:
+            print(f"Error al asignar animales a corrales: {e}")
+
+        # Agregar corrales a la granja
+        granja_buen_pastor.agregar_corral(corral_vacas)
+        granja_buen_pastor.agregar_corral(corral_cerdos)
+        granja_buen_pastor.agregar_corral(corral_aves)
+
+        # Crear empleados
+        empleado1 = Empleado("Juan Pérez", "Alimentación de animales")
+        empleado2 = Empleado("María García", "Limpieza de corrales")
+        empleado3 = Empleado("Carlos López", "Control sanitario")
+
+        # Contratar empleados
+        granja_buen_pastor.contratar_empleado(empleado1)
+        granja_buen_pastor.contratar_empleado(empleado2)
+        granja_buen_pastor.contratar_empleado(empleado3)
+
+        # Demostrar funcionalidades usando métodos personalizados y polimorfismo
+        print("\n--- Operaciones diarias en la granja ---")
+        for empleado in granja_buen_pastor.empleados:
+            empleado.registrar_asistencia()
+            empleado.realizar_tarea()
+
+        # Métodos con retornos y manejo de errores
+        if vaca_lola.alimentar(10):
+            print(f"{vaca_lola.nombre} ha sido alimentada correctamente.")
+        else:
+            print(f"No se pudo alimentar a {vaca_lola.nombre}.")
+
+        cerdo_pepe.vacunar()
+        if gallina_clara.registrar_peso(2.7):
+            print(f"Nuevo peso registrado para {gallina_clara.nombre}.")
+        else:
+            print(f"No se pudo registrar el peso para {gallina_clara.nombre}.")
+
+        corral_aves.limpiar()
+        empleado2.reportar_incidencias("Fuga de agua en el corral A-01")
+
+        # Cierre de la granja (demostrando composición)
+        print("\n--- Cierre de la granja ---")
+        granja_buen_pastor.cerrar()
+        print(f"Empleados después del cierre: {len(granja_buen_pastor.empleados)}")
+
+    except Exception as err:
+        print(f"Ocurrió un error en la ejecución principal: {err}")
 
 if __name__ == "__main__":
     main()
