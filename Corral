@@ -37,7 +37,7 @@ class Corral:
 
     # Métodos personalizados
     def asignar_animal(self, animal: Animal) -> bool:
-        """Asigna un animal al corral. Devuelve True si se asignó correctamente."""
+        "Asigna un animal al corral. Devuelve True si se asignó correctamente."
         if not isinstance(animal, Animal):
             raise TypeError("Sólo se pueden asignar objetos de tipo Animal.")
         self._animales.append(animal)
