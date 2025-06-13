@@ -1,21 +1,105 @@
 from animales import Animal
 from corrales import Corral
 from empleados import Empleado
+from typing import List
+from abc import ABC, abstractmethod
+
+class EmpleadoBase(ABC):
+    """Clase base abstracta para todos los empleados de la granja."""
+
+    def __init__(self, nombre: str):
+        self._nombre = nombre
+
+    @property
+    def nombre(self):
+        return self._nombre
+
+    @abstractmethod
+    def trabajar(self):
+        """Realiza la tarea principal del empleado."""
+        pass
 
 class Granja:
-    def __init__(self, nombre):
-        self.nombre = nombre
-        self.corrales = []
-        self.empleados = []
+    """
+    Representa una granja que gestiona corrales y empleados.
+    Permite agregar corrales, contratar empleados y realizar operaciones básicas.
+    """
 
-    def agregar_corral(self, corral):
-        self.corrales.append(corral)
+    def __init__(self, nombre: str):
+        """
+        Inicializa la granja con un nombre específico.
+        """
+        self._nombre: str = nombre
+        self._corrales: List[Corral] = []
+        self._empleados: List[EmpleadoBase] = []
+
+    @property
+    def nombre(self):
+        """Devuelve el nombre de la granja."""
+        return self._nombre
+
+    @nombre.setter
+    def nombre(self, valor: str):
+        """Establece el nombre de la granja."""
+        self._nombre = valor
+
+    @property
+    def corrales(self):
+        """Devuelve la lista de corrales."""
+        return self._corrales
+
+    @property
+    def empleados(self):
+        """Devuelve la lista de empleados."""
+        return self._empleados
+
+    def agregar_corral(self, corral: Corral) -> bool:
+        """
+        Agrega un corral a la granja si no existe ya.
+        Retorna True si fue agregado, False si ya estaba.
+        """
+        if corral in self._corrales:
+            print(f"El corral {corral.identificador} ya existe en la granja.")
+            return False
+        self._corrales.append(corral)
         print(f"Corral {corral.identificador} agregado a la granja.")
+        return True
 
-    def contratar_empleado(self, empleado):
-        self.empleados.append(empleado)
+    def contratar_empleado(self, empleado: EmpleadoBase) -> bool:
+        """
+        Contrata un empleado si no está ya contratado.
+        Retorna True si fue contratado, False si ya estaba.
+        """
+        if empleado in self._empleados:
+            print(f"El empleado {empleado.nombre} ya está contratado.")
+            return False
+        self._empleados.append(empleado)
         print(f"Empleado {empleado.nombre} contratado en la granja.")
+        return True
+
+    def listar_empleados_trabajando(self):
+        """
+        Hace que todos los empleados realicen su trabajo.
+        Demuestra polimorfismo llamando a trabajar() en cada tipo de empleado.
+        """
+        for empleado in self._empleados:
+            try:
+                empleado.trabajar()
+            except Exception as e:
+                print(f"Error al ejecutar el trabajo de {empleado.nombre}: {e}")
 
     def cerrar(self):
-        print(f"La granja {self.nombre} ha cerrado. Los empleados ya no están vinculados.")
-        self.empleados.clear()
+        """
+        Cierra la granja y elimina todos los empleados.
+        """
+        print(f"La granja {self._nombre} ha cerrado. Los empleados ya no están vinculados.")
+        self._empleados.clear()
+
+# Ejemplo de implementación de EmpleadoBase para demostrar polimorfismo:
+class Veterinario(EmpleadoBase):
+    def trabajar(self):
+        print(f"{self._nombre} cuida de los animales.")
+
+class Agricultor(EmpleadoBase):
+    def trabajar(self):
+        print(f"{self._nombre} cultiva la tierra.")
