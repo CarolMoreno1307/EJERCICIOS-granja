@@ -4,9 +4,7 @@ from empleados import Empleado
 from granja import Granja
 
 def main():
-    """
-    Función principal que ejecuta el flujo de la granja.
-    """
+    "Función principal que ejecuta el flujo de la granja."
     try:
         # Crear la granja (composición)
         granja_buen_pastor = Granja("El Buen Pastor")
@@ -35,7 +33,7 @@ def main():
         granja_buen_pastor.agregar_corral(corral_aves)
 
         # Crear empleados
-        empleado1 = Empleado("Juan Pérez", "Alimentación de animales")
+        empleado1 = Empleado("Juan Perez", "Alimentación de animales")
         empleado2 = Empleado("María García", "Limpieza de corrales")
         empleado3 = Empleado("Carlos López", "Control sanitario")
 
