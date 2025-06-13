@@ -50,18 +50,20 @@ def main():
             empleado.registrar_asistencia()
             empleado.realizar_tarea()
 
-        # Métodos con retornos y manejo de errores
+        # Ejemplo de alimentar, vacunar y registrar peso
         if vaca_lola.alimentar(10):
             print(f"{vaca_lola.nombre} ha sido alimentada correctamente.")
         else:
             print(f"No se pudo alimentar a {vaca_lola.nombre}.")
 
         cerdo_pepe.vacunar()
+
         if gallina_clara.registrar_peso(2.7):
             print(f"Nuevo peso registrado para {gallina_clara.nombre}.")
         else:
             print(f"No se pudo registrar el peso para {gallina_clara.nombre}.")
 
+        # Limpieza de corral y reporte de incidencias
         corral_aves.limpiar()
         empleado2.reportar_incidencias("Fuga de agua en el corral A-01")
 
