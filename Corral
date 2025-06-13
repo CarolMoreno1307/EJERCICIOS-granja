@@ -1,8 +1,8 @@
-from typing import List
+rom typing import List
 from abc import ABC, abstractmethod
 
 class Animal(ABC):
-    """Clase abstracta para representar un animal."""
+    "Clase abstracta para representar un animal."
 
     @property
     @abstractmethod
@@ -14,9 +14,7 @@ class Animal(ABC):
         pass
 
 class Corral:
-    """
-    Clase que representa un corral y gestiona la asignación de animales.
-    """
+    "Clase que representa un corral y gestiona la asignación de animales."
 
     def __init__(self, identificador: str):
         self._identificador = identificador
@@ -47,15 +45,15 @@ class Corral:
         return True
 
     def limpiar(self) -> None:
-        """Limpia el corral y muestra un mensaje."""
+        "Limpia el corral y muestra un mensaje."
         print(f"El corral {self._identificador} ha sido limpiado.")
 
     def listar_animales(self) -> List[str]:
-        """Devuelve una lista con los nombres de los animales en el corral."""
+        "Devuelve una lista con los nombres de los animales en el corral."
         return [animal.nombre for animal in self._animales]
 
     def sonidos_de_todos(self) -> List[str]:
-        """Devuelve una lista con los sonidos de todos los animales en el corral."""
+        "Devuelve una lista con los sonidos de todos los animales en el corral."
         return [animal.hacer_sonido() for animal in self._animales]
 
 # Ejemplo de subclase que implementa polimorfismo
