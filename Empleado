@@ -1,16 +1,12 @@
 from abc import ABC, abstractmethod
 
 class Tarea:
-    """
-    Representa una tarea asignada a un trabajador de la granja.
-    """
+    "Representa una tarea asignada a un trabajador de la granja."
     def __init__(self, descripcion):
         self.descripcion = descripcion
 
 class Trabajador(ABC):
-    """
-    Clase abstracta base para trabajadores de la granja.
-    """
+    "Clase abstracta base para trabajadores de la granja."
     def __init__(self, nombre):
         self._nombre = nombre
         self._asistencias = 0
@@ -32,9 +28,7 @@ class Trabajador(ABC):
         pass
 
     def registrar_asistencia(self):
-        """
-        Registra una asistencia y retorna el total actualizado.
-        """
+"Registra una asistencia y retorna el total actualizado."
         try:
             self._asistencias += 1
             return self._asistencias
@@ -43,16 +37,11 @@ class Trabajador(ABC):
             return None
 
     def reportar_incidencias(self, incidencia):
-        """
-        Permite que el trabajador reporte una incidencia.
-        """
+        "Permite que el trabajador reporte una incidencia."
         return f"{self._nombre} reporta: {incidencia}"
 
 class Empleado(Trabajador):
-    """
-    Empleado de la granja, con una tarea asignada.
-    Implementa los principios de POO y SOLID.
-    """
+    "Empleado de la granja, con una tarea asignada. Implementa los principios de POO y SOLID."
     def __init__(self, nombre, tarea: Tarea):
         super().__init__(nombre)
         self._tarea = tarea
@@ -66,9 +55,7 @@ class Empleado(Trabajador):
         self._tarea = nueva_tarea
 
     def realizar_tarea(self):
-        """
-        Realiza la tarea asignada y retorna un mensaje.
-        """
+        "Realiza la tarea asignada y retorna un mensaje."
         return f"{self._nombre} está realizando la tarea: {self._tarea.descripcion}."
 
 # Ejemplo de uso:
